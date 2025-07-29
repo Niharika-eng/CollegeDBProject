@@ -12,11 +12,10 @@ public class StudentEnrollmentTask extends Thread {
     @Override
     public void run() {
         synchronized (student) {
-            System.out.println("🔁 " + student.getName() + " is being enrolled in " + course.getCourseName() + " by "
-                    + Thread.currentThread().getName());
+            System.out.println(student.getName() + " is being enrolled in " + course.getCourseName() + " by " + Thread.currentThread().getName());
             student.enrollInCourse(course);
             student.assignGrade(course, grade);
-            System.out.println("✅ " + student.getName() + " enrolled and graded in " + course.getCourseName());
+            System.out.println(student.getName() + " enrolled and graded in " + course.getCourseName());
         }
     }
 }

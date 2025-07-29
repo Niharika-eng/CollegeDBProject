@@ -19,7 +19,6 @@ public class Course {
         return professor;
     }
 
-    // ... other methods
     public int getCourseId() {
         return courseId;
     }

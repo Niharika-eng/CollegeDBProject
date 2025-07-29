@@ -11,17 +11,16 @@ public class DatabaseManager {
 
     public DatabaseManager() {
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver"); // ⬅️ add this line
+            Class.forName("com.mysql.cj.jdbc.Driver");
             conn = DriverManager.getConnection(URL, USER, PASSWORD);
-            System.out.println("✅ Connected to MySQL database!");
+            System.out.println("Connected to MySQL database!");
         } catch (ClassNotFoundException e) {
-            System.out.println("❌ MySQL JDBC Driver not found: " + e.getMessage());
+            System.out.println("MySQL JDBC Driver not found: " + e.getMessage());
         } catch (SQLException e) {
-            System.out.println("❌ Connection failed: " + e.getMessage());
+            System.out.println("Connection failed: " + e.getMessage());
         }
     }
 
-    // Example method: Fetch all students
     public List<Student> getAllStudents() {
         List<Student> students = new ArrayList<>();
         String query = "SELECT * FROM students";
@@ -38,9 +37,9 @@ public class DatabaseManager {
             }
 
         } catch (SQLSyntaxErrorException e) {
-            System.out.println("❌ Syntax error in SQL: " + e.getMessage());
+            System.out.println("Syntax error in SQL: " + e.getMessage());
         } catch (SQLException e) {
-            System.out.println("❌ Database error: " + e.getMessage());
+            System.out.println("Database error: " + e.getMessage());
         }
 
         return students;
@@ -159,6 +158,7 @@ public class DatabaseManager {
         try (PreparedStatement stmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             stmt.setString(1, name);
             stmt.setString(2, email);
+            //rows is number of rows affected
             int rows = stmt.executeUpdate();
 
             if (rows > 0) {
@@ -166,14 +166,28 @@ public class DatabaseManager {
                 if (rs.next()) {
                     int newId = rs.getInt(1);
                     newStudent = new Student(newId, name, email);
-                    System.out.println("✅ Added student: " + name + " (ID: " + newId + ")");
+                    System.out.println("Added student: " + name + " (ID: " + newId + ")");
                 }
             }
         } catch (SQLException e) {
-            System.out.println("❌ Error adding student: " + e.getMessage());
+            System.out.println("Error adding student: " + e.getMessage());
         }
 
         return newStudent;
+    }
+
+    public void deleteStudent(String email){
+        String query = "DELETE FROM students WHERE email = ?";
+
+        try(PreparedStatement pStatement = conn.prepareStatement(query)){
+            pStatement.setString(1, email);
+            int rows = pStatement.executeUpdate();
+            System.out.println("Number of rows affected: "+ rows);
+            
+        }
+        catch(SQLException e){
+            e.printStackTrace();
+        }
     }
 
 }

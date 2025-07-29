@@ -65,9 +65,9 @@ public class Student extends Person {
                 }
             }
 
-            System.out.println("📝 Report written to " + fileName);
+            System.out.println("Report written to " + fileName);
         } catch (IOException e) {
-            System.out.println("❌ Error writing report: " + e.getMessage());
+            System.out.println("Error writing report: " + e.getMessage());
         }
     }
 

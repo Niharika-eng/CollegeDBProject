@@ -1,4 +1,4 @@
 Niharika Patel - Grade Report
 -----------------------------
-Advanced Data Structures: 91
 Introduction to Java: 92
+Advanced Data Structures: 91
